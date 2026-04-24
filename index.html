@@ -13,17 +13,13 @@
     :root {
       --bg:        #060f06;
       --felt:      #0c400c;
-      --felt-mid:  #0f5010;
-      --felt-lite: #166016;
       --gold:      #e8c050;
       --gold-dim:  rgba(232,192,80,0.15);
       --emerald:   #2ecc71;
-      --emerald-dim: rgba(46,204,113,0.18);
       --red-card:  #c81414;
       --black-card:#141414;
       --glass:     rgba(0,0,0,0.42);
       --border:    rgba(255,255,255,0.1);
-      --border-hi: rgba(255,255,255,0.2);
     }
 
     body {
@@ -33,7 +29,6 @@
       min-height: 100vh;
     }
 
-    /* ── Screens ─────────────────────────────────────────────────────────── */
     .screen { display: none; }
     .screen.active { display: flex; flex-direction: column; }
 
@@ -95,7 +90,7 @@
       opacity: 0.9;
     }
 
-    .input-hint { color: #666; font-size: 0.7rem; margin-top: 0.22rem; }
+    .input-hint { color: #555; font-size: 0.7rem; margin-top: 0.22rem; }
 
     input[type="number"] {
       width: 100%;
@@ -117,7 +112,6 @@
       box-shadow: 0 0 0 3px rgba(46,204,113,0.12);
     }
 
-    /* Buttons */
     .btn {
       display: block;
       width: 100%;
@@ -137,9 +131,9 @@
 
     .btn-primary {
       background: linear-gradient(160deg, #1f8c1f 0%, #136813 100%);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.08) inset;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
     }
-    .btn-primary:hover { filter: brightness(1.15); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+    .btn-primary:hover { filter: brightness(1.15); }
 
     .btn-ghost {
       background: rgba(255,255,255,0.08);
@@ -164,33 +158,20 @@
       border-radius: 8px;
     }
 
-    /* Hi-Lo reference */
     .hilo-ref {
       margin-top: 1.6rem;
       padding-top: 1.4rem;
       border-top: 1px solid rgba(255,255,255,0.08);
       text-align: center;
     }
-    .hilo-ref-title {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #666;
-      margin-bottom: 0.7rem;
-    }
+    .hilo-ref-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #555; margin-bottom: 0.7rem; }
     .hilo-chips { display: flex; justify-content: center; gap: 0.6rem; }
-    .hilo-chip {
-      padding: 0.22rem 0.7rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
+    .hilo-chip { padding: 0.22rem 0.7rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
     .hc-plus  { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
     .hc-zero  { background: rgba(180,180,180,0.1);  color: #888;    border: 1px solid rgba(180,180,180,0.2); }
     .hc-minus { background: rgba(220,50,50,0.15);   color: #e07070; border: 1px solid rgba(220,50,50,0.3); }
 
-    /* ── Game screen ─────────────────────────────────────────────────────── */
+    /* ── Game ────────────────────────────────────────────────────────────── */
     #game {
       min-height: 100vh;
       background:
@@ -199,7 +180,6 @@
         var(--felt);
     }
 
-    /* Topbar */
     .topbar {
       display: flex;
       align-items: center;
@@ -223,30 +203,15 @@
       flex-shrink: 0;
     }
 
-    .shoe-wrap {
-      flex: 1;
-      min-width: 110px;
-      max-width: 180px;
-    }
-    .shoe-lbl { font-size: 0.65rem; color: #666; margin-bottom: 3px; font-weight: 500; }
-    .shoe-track {
-      height: 5px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .shoe-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #2ecc71, #a8e063);
-      border-radius: 3px;
-      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-    }
+    .shoe-wrap { flex: 1; min-width: 110px; max-width: 180px; }
+    .shoe-lbl  { font-size: 0.65rem; color: #555; margin-bottom: 3px; font-weight: 500; }
+    .shoe-track { height: 5px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+    .shoe-bar { height: 100%; background: linear-gradient(90deg, #2ecc71, #a8e063); border-radius: 3px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); }
 
     .topbar-actions { display: flex; gap: 0.45rem; margin-left: auto; }
 
-    /* Table content */
     .table-area {
-      padding: 1rem 1.1rem 6rem;
+      padding: 1rem 1.1rem 90px;
       max-width: 1160px;
       margin: 0 auto;
     }
@@ -281,53 +246,26 @@
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 12px;
       padding: 0.7rem 0.8rem;
-      transition: border-color 0.2s;
     }
 
-    .player-title {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #4fc07a;
-      margin-bottom: 0.45rem;
-    }
+    .player-title { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #4fc07a; margin-bottom: 0.45rem; }
 
-    .hand-cards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      align-items: flex-end;
-      margin-bottom: 5px;
-    }
+    .hand-cards { display: flex; flex-wrap: wrap; gap: 4px; align-items: flex-end; margin-bottom: 5px; }
     .hand-cards.hv-mode { margin-bottom: 20px; }
 
-    .hand-score {
-      font-size: 0.7rem;
-      color: #777;
-      font-weight: 500;
-    }
+    .hand-score { font-size: 0.7rem; color: #666; font-weight: 500; }
     .hand-score .s-bust { color: #e07070; }
     .hand-score .s-bj   { color: var(--gold); font-weight: 700; }
 
-    .split-divider {
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #555;
-      margin: 5px 0 3px;
-    }
+    .split-divider { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.06em; color: #555; margin: 5px 0 3px; }
 
-    /* ── Playing cards ───────────────────────────────────────────────────── */
+    /* ── Cards ───────────────────────────────────────────────────────────── */
     .card {
       width: 54px;
       height: 78px;
       background: #fffef6;
       border-radius: 6px;
-      box-shadow:
-        0 2px 8px rgba(0,0,0,0.55),
-        0 1px 2px rgba(0,0,0,0.7),
-        inset 0 1px 0 rgba(255,255,255,0.9);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.9);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -340,17 +278,9 @@
     }
     .card.red   { color: var(--red-card); }
     .card.black { color: var(--black-card); }
-
     .c-tl { font-size: 11px; line-height: 1.2; }
     .c-br { font-size: 11px; line-height: 1.2; transform: rotate(180deg); align-self: flex-end; }
-    .c-mid {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      line-height: 1;
-    }
+    .c-mid { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; line-height: 1; }
 
     .card.back {
       background: #1a3c82;
@@ -360,13 +290,7 @@
       border: 1px solid #162f66;
       box-shadow: 0 2px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
     }
-    .card.back::after {
-      content: '';
-      position: absolute;
-      inset: 5px;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 3px;
-    }
+    .card.back::after { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(255,255,255,0.12); border-radius: 3px; }
     .card.back .c-tl, .card.back .c-br, .card.back .c-mid { opacity: 0; }
 
     .card.pop { animation: cardPop 0.2s cubic-bezier(0.34,1.4,0.64,1) backwards; }
@@ -375,87 +299,110 @@
       to   { opacity: 1; transform: none; }
     }
 
-    .hv-tag {
-      position: absolute;
-      bottom: -16px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 10px;
-      font-weight: 800;
-      font-family: 'Inter', sans-serif;
-      white-space: nowrap;
-      line-height: 1;
-    }
+    .hv-tag { position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 800; font-family: 'Inter', sans-serif; white-space: nowrap; line-height: 1; }
     .hv-tag.p { color: #2ecc71; }
-    .hv-tag.z { color: #666; }
+    .hv-tag.z { color: #555; }
     .hv-tag.n { color: #e07070; }
 
-    /* ── Sticky footer ───────────────────────────────────────────────────── */
+    /* ── Game bar (fixed footer, two modes) ──────────────────────────────── */
     .game-bar {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      background: rgba(4,18,4,0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-top: 1px solid rgba(255,255,255,0.09);
-      padding: 0.7rem 1.1rem;
+      background: rgba(3,12,3,0.94);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 0.8rem 1.2rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 0.75rem;
       z-index: 10;
+      min-height: 66px;
     }
 
-    /* Reveal pill */
-    .reveal-pill {
+    /* Input mode */
+    .bar-timer {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--gold);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.5px;
+      flex-shrink: 0;
+      min-width: 58px;
+    }
+
+    .bar-entry {
       display: flex;
       align-items: center;
-      gap: 0.45rem;
-      padding: 0.38rem 0.85rem;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.78rem;
-      color: #777;
-      font-weight: 600;
-      transition: background 0.15s, color 0.15s;
-      user-select: none;
-      white-space: nowrap;
+      gap: 0.55rem;
+      flex: 1;
     }
-    .reveal-pill:hover { background: rgba(255,255,255,0.11); color: #aaa; }
 
-    .count-info {
-      font-size: 0.8rem;
-      color: #aaa;
-      font-weight: 500;
+    .bar-rc {
+      flex: 1;
+      max-width: 200px;
+      padding: 0.6rem 0.9rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      outline: none;
+      -moz-appearance: textfield;
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .count-info strong { color: #e0e0e0; }
-    .count-info .ci-pos { color: #2ecc71; font-weight: 700; }
-    .count-info .ci-neg { color: #e07070; font-weight: 700; }
-    .count-info .ci-hide {
-      margin-left: 0.5rem;
-      font-size: 0.7rem;
-      color: #555;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-    .count-info .ci-hide:hover { color: #888; }
+    .bar-rc::-webkit-inner-spin-button { opacity: 0.3; }
+    .bar-rc:focus { border-color: var(--emerald); box-shadow: 0 0 0 3px rgba(46,204,113,0.15); }
 
-    .bar-btns { display: flex; gap: 0.5rem; flex-shrink: 0; }
-
-    /* ── Result screen ───────────────────────────────────────────────────── */
-    #result {
+    /* Feedback mode */
+    .bar-feedback {
+      flex: 1;
+      display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 10px;
+      min-width: 0;
+    }
+    .bar-feedback.ok   { background: rgba(46,204,113,0.12); border: 1px solid rgba(46,204,113,0.3); }
+    .bar-feedback.near { background: rgba(232,192,80,0.1);  border: 1px solid rgba(232,192,80,0.3); }
+    .bar-feedback.off  { background: rgba(220,50,50,0.1);   border: 1px solid rgba(220,50,50,0.25); }
+
+    .bf-label { font-weight: 800; font-size: 0.88rem; white-space: nowrap; flex-shrink: 0; }
+    .bar-feedback.ok   .bf-label { color: #2ecc71; }
+    .bar-feedback.near .bf-label { color: var(--gold); }
+    .bar-feedback.off  .bf-label { color: #e07070; }
+
+    .bf-detail { font-size: 0.78rem; color: #999; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bf-detail b { color: #ddd; }
+
+    /* Review mode */
+    .bar-review {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #666;
+      font-weight: 600;
+    }
+    .bar-nav-btns { display: flex; gap: 0.45rem; margin-left: auto; flex-shrink: 0; }
+
+    /* ── Summary screen ──────────────────────────────────────────────────── */
+    #summary {
+      align-items: center;
+      justify-content: flex-start;
       min-height: 100vh;
-      padding: 2.5rem 1rem;
+      padding: 2rem 1rem;
+      overflow-y: auto;
       background:
         radial-gradient(ellipse 80% 50% at 50% 0%, rgba(15,80,15,0.5) 0%, transparent 100%),
         var(--bg);
     }
 
-    .result-panel {
+    .summary-panel {
       background: var(--glass);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -463,73 +410,66 @@
       border-radius: 20px;
       padding: 2rem;
       width: 100%;
-      max-width: 460px;
+      max-width: 500px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+      margin: auto;
     }
 
-    .result-panel h2 {
-      font-size: 1.35rem;
-      font-weight: 800;
-      margin-bottom: 0.25rem;
-    }
-    .result-panel .rp-sub {
-      color: #666;
-      font-size: 0.82rem;
-      margin-bottom: 1.4rem;
-    }
+    .summary-panel h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .summary-sub { font-size: 0.82rem; color: #555; margin-bottom: 1.3rem; }
 
-    .count-row {
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+      margin-bottom: 1.3rem;
+    }
+    .stat-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+    }
+    .stat-num { font-size: 1.5rem; font-weight: 800; color: var(--gold); font-variant-numeric: tabular-nums; }
+    .stat-lbl { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #555; margin-top: 2px; }
+
+    .round-list {
+      max-height: 290px;
+      overflow-y: auto;
+      margin-bottom: 1.1rem;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.1) transparent;
+    }
+    .round-list::-webkit-scrollbar { width: 4px; }
+    .round-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+
+    .rr {
       display: flex;
-      gap: 0.7rem;
-      margin-bottom: 0.9rem;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.45rem 0.65rem;
+      border-radius: 8px;
+      font-size: 0.79rem;
+      margin-bottom: 3px;
     }
-    .count-col { flex: 1; }
+    .rr.ok   { background: rgba(46,204,113,0.07); }
+    .rr.near { background: rgba(232,192,80,0.07); }
+    .rr.off  { background: rgba(220,50,50,0.07); }
 
-    .answer-card {
-      border-radius: 13px;
-      padding: 1rem 1.1rem;
-      margin: 1.1rem 0;
-    }
-    .answer-card.ok   { background: rgba(46,204,113,0.1); border: 1px solid rgba(46,204,113,0.35); }
-    .answer-card.near { background: rgba(232,192,80,0.1);  border: 1px solid rgba(232,192,80,0.35); }
-    .answer-card.off  { background: rgba(220,50,50,0.1);   border: 1px solid rgba(220,50,50,0.3); }
-
-    .answer-grade {
-      font-size: 1.05rem;
-      font-weight: 800;
-      margin-bottom: 0.55rem;
-    }
-    .answer-card.ok   .answer-grade { color: #2ecc71; }
-    .answer-card.near .answer-grade { color: var(--gold); }
-    .answer-card.off  .answer-grade { color: #e07070; }
-
-    .answer-body {
-      font-size: 0.8rem;
-      line-height: 1.85;
-      color: #bbb;
-    }
-    .answer-body strong { color: #eee; }
-
-    .breakdown {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.55rem;
-    }
-    .bk-chip {
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 0.15rem 0.5rem;
-      border-radius: 10px;
-    }
-    .bk-pos { background: rgba(46,204,113,0.15); color: #2ecc71; }
-    .bk-neg { background: rgba(220,50,50,0.15);  color: #e07070; }
-    .bk-neu { background: rgba(150,150,150,0.12); color: #888; }
+    .rr-n  { color: #555; font-weight: 700; min-width: 22px; font-size: 0.72rem; }
+    .rr-mk { font-weight: 800; min-width: 10px; }
+    .rr.ok   .rr-mk { color: #2ecc71; }
+    .rr.near .rr-mk { color: var(--gold); }
+    .rr.off  .rr-mk { color: #e07070; }
+    .rr-v  { flex: 1; color: #999; }
+    .rr-v b { color: #ddd; }
+    .rr-t  { color: #555; font-size: 0.72rem; font-variant-numeric: tabular-nums; }
   </style>
 </head>
 <body>
 
-<!-- ── SETUP ──────────────────────────────────────────────────────────────── -->
+<!-- ── SETUP ─────────────────────────────────────────────────────────────── -->
 <div id="setup" class="screen active">
   <div class="logo">Black<em>jack</em></div>
   <p class="tagline">Hi-Lo Count Trainer</p>
@@ -538,17 +478,17 @@
     <div class="form-row">
       <label for="iDecks">Number of Decks</label>
       <input type="number" id="iDecks" min="1" max="8" value="6">
-      <div class="input-hint">Standard casino uses 6-deck shoes</div>
+      <div class="input-hint">Standard casino shoe is 6 decks</div>
     </div>
     <div class="form-row">
       <label for="iPlayers">Players at the Table</label>
       <input type="number" id="iPlayers" min="1" max="7" value="5">
-      <div class="input-hint">Excludes you — count all visible hands</div>
+      <div class="input-hint">Count every visible hand including the dealer</div>
     </div>
     <div class="form-row">
-      <label for="iRounds">Rounds per Session</label>
-      <input type="number" id="iRounds" min="1" max="30" value="3">
-      <div class="input-hint">Rounds dealt before you guess the count</div>
+      <label for="iRounds">Hands per Session</label>
+      <input type="number" id="iRounds" min="1" max="30" value="5">
+      <div class="input-hint">Hands dealt per shoe before seeing your score</div>
     </div>
     <button class="btn btn-primary" onclick="startTraining()">Start Training</button>
 
@@ -563,10 +503,10 @@
   </div>
 </div>
 
-<!-- ── GAME ───────────────────────────────────────────────────────────────── -->
+<!-- ── GAME ──────────────────────────────────────────────────────────────── -->
 <div id="game" class="screen">
   <div class="topbar">
-    <div class="round-pill" id="tRound">Round 1 / 3</div>
+    <div class="round-pill" id="tRound">Hand 1 / 5</div>
     <div class="shoe-wrap">
       <div class="shoe-lbl" id="tShoeLabel">Shoe: 312 left</div>
       <div class="shoe-track"><div class="shoe-bar" id="tShoeFill" style="width:100%"></div></div>
@@ -579,40 +519,12 @@
 
   <div class="table-area" id="tableArea"></div>
 
-  <div class="game-bar">
-    <div id="countArea">
-      <!-- populated by JS — either reveal-pill or count-info -->
-    </div>
-    <div class="bar-btns">
-      <button class="btn btn-ghost btn-sm" id="tPrev" onclick="prevRound()" style="display:none">← Prev</button>
-      <button class="btn btn-primary btn-sm" id="tNext" onclick="nextAction()">Next Round →</button>
-    </div>
-  </div>
+  <div class="game-bar" id="gameBar"></div>
 </div>
 
-<!-- ── RESULT ─────────────────────────────────────────────────────────────── -->
-<div id="result" class="screen">
-  <div class="result-panel">
-    <h2>What's the Count?</h2>
-    <p class="rp-sub" id="rSub">After 3 rounds — enter your Hi-Lo estimates.</p>
-
-    <div class="count-row">
-      <div class="count-col">
-        <label for="iRC">Running Count</label>
-        <input type="number" id="iRC" placeholder="e.g. −4" autofocus>
-      </div>
-      <div class="count-col">
-        <label for="iTC">True Count</label>
-        <input type="number" id="iTC" step="1" placeholder="e.g. −2">
-      </div>
-    </div>
-    <button class="btn btn-primary" onclick="checkCount()">Check My Count</button>
-
-    <div id="answerCard" style="display:none"></div>
-
-    <button class="btn btn-ghost" id="rReview" style="display:none;margin-top:0.55rem" onclick="goReview()">Review Dealt Cards</button>
-    <button class="btn btn-ghost" style="margin-top:0.5rem" onclick="goSetup()">New Session</button>
-  </div>
+<!-- ── SUMMARY ───────────────────────────────────────────────────────────── -->
+<div id="summary" class="screen">
+  <div class="summary-panel" id="summaryPanel"></div>
 </div>
 
 <script>
@@ -676,7 +588,6 @@ function decide(hand, dealerUp, first) {
       if (pv === 6)  return dv <= 6 ? 'split' : 'hit';
       if (pv === 4)  return 'hit';
       if (pv <= 3)   return dv <= 7 ? 'split' : 'hit';
-      // 55: fall through to hard 10
     }
   }
 
@@ -746,11 +657,35 @@ function simRound(numPlayers) {
   for (const hands of players) for (const h of hands) for (const c of h) delta += hiloVal(c.rank);
   for (const c of dh) delta += hiloVal(c.rank);
 
-  return { dealer: dh, players, delta };
+  return { dealer: dh, players, delta, shoeUsed: si };
 }
 
 // ─── State ────────────────────────────────────────────────────────────────────
-let cfg = {}, rounds = [], curRound = 0, showHV = false, reviewing = false;
+let cfg      = {};
+let rounds   = [];
+let curRound = 0;
+let showHV   = false;
+let reviewing= false;
+// Per-round guess records: { userRC, actualRC, tc, timeSec, grade }
+let guesses  = [];
+
+// Timer
+let timerStart    = 0;
+let timerInterval = null;
+
+function startTimer() {
+  timerStart = Date.now();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    const el = document.getElementById('timerEl');
+    if (el) el.textContent = ((Date.now() - timerStart) / 1000).toFixed(1);
+  }, 100);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+  return (Date.now() - timerStart) / 1000;
+}
 
 // ─── Card rendering ───────────────────────────────────────────────────────────
 function cardHtml(card, delay) {
@@ -776,16 +711,16 @@ function scoreHtml(cards) {
 
 // ─── Render round ─────────────────────────────────────────────────────────────
 function renderRound(idx) {
-  const r = rounds[idx];
+  const r   = rounds[idx];
   const hvc = showHV ? ' hv-mode' : '';
-  let d = 0;
+  let d     = 0;
 
-  const dealerCards = r.dealer.map((c, i) => cardHtml(c, d + i * 65)).join('');
+  const dCards = r.dealer.map((c, i) => cardHtml(c, d + i * 65)).join('');
   d += r.dealer.length * 65;
 
   let html = `<div class="dealer-zone">
     <div class="zone-label">Dealer</div>
-    <div class="hand-cards${hvc}">${dealerCards}</div>
+    <div class="hand-cards${hvc}">${dCards}</div>
     <div class="hand-score">${scoreHtml(r.dealer)}</div>
   </div><div class="players-grid">`;
 
@@ -804,64 +739,109 @@ function renderRound(idx) {
   return html + '</div>';
 }
 
-// ─── Shoe bar ─────────────────────────────────────────────────────────────────
-function updateShoe() {
-  const left = shoe.length - si;
+function updateShoe(idx) {
+  const left = shoe.length - rounds[idx].shoeUsed;
   const pct  = (left / shoe.length * 100).toFixed(1);
   document.getElementById('tShoeLabel').textContent = `Shoe: ${left} left`;
   document.getElementById('tShoeFill').style.width  = pct + '%';
 }
 
-// ─── Count reveal ─────────────────────────────────────────────────────────────
-let countShown = false;
-
-function resetCountReveal() {
-  countShown = false;
-  document.getElementById('countArea').innerHTML =
-    `<div class="reveal-pill" onclick="showCount()">🔒 Reveal count</div>`;
+// ─── Game bar states ──────────────────────────────────────────────────────────
+function barInput() {
+  const isLast = curRound === rounds.length - 1;
+  document.getElementById('gameBar').innerHTML = `
+    <div class="bar-timer">⏱ <span id="timerEl">0.0</span>s</div>
+    <div class="bar-entry">
+      <input class="bar-rc" type="number" id="rcInput"
+        placeholder="Running count…"
+        onkeydown="if(event.key==='Enter')submitGuess()">
+      <button class="btn btn-primary btn-sm" onclick="submitGuess()">Submit</button>
+    </div>`;
+  setTimeout(() => document.getElementById('rcInput')?.focus(), 60);
+  startTimer();
 }
 
-function showCount() {
-  countShown = true;
-  const r   = rounds[curRound];
-  const cum = rounds.slice(0, curRound + 1).reduce((s, x) => s + x.delta, 0);
-  const fmt = n => `<span class="${n>0?'ci-pos':n<0?'ci-neg':''}">${n>0?'+':''}${n}</span>`;
-  document.getElementById('countArea').innerHTML =
-    `<div class="count-info">
-      Round ${curRound + 1}: ${fmt(r.delta)}
-      &nbsp;·&nbsp; Running: <strong>${fmt(cum)}</strong>
-      <span class="ci-hide" onclick="resetCountReveal()">hide</span>
+function barResult(userRC, actualRC, tc, timeSec, cls) {
+  const fmt    = n => n >= 0 ? `+${n}` : String(n);
+  const fmtF   = n => (n >= 0 ? '+' : '') + n.toFixed(1);
+  const labels = { ok: '✓ Exact', near: '~ Close', off: '✗ Miss' };
+  const isLast = curRound === rounds.length - 1;
+
+  document.getElementById('gameBar').innerHTML = `
+    <div class="bar-feedback ${cls}">
+      <span class="bf-label">${labels[cls]}</span>
+      <span class="bf-detail">
+        you ${fmt(userRC)} · actual <b>${fmt(actualRC)}</b> · TC ≈${fmtF(tc)} · ${timeSec.toFixed(1)}s
+      </span>
+    </div>
+    <button class="btn btn-primary btn-sm" id="nextBtn" onclick="nextAction()">
+      ${isLast ? 'See Summary →' : 'Next Hand →'}
+    </button>`;
+  document.getElementById('nextBtn').focus();
+}
+
+function barReview() {
+  const total = rounds.length;
+  document.getElementById('gameBar').innerHTML = `
+    <div class="bar-review">Reviewing hand ${curRound + 1} / ${total}</div>
+    <div class="bar-nav-btns">
+      <button class="btn btn-ghost btn-sm" onclick="prevRound()"
+        ${curRound === 0 ? 'disabled style="opacity:0.35"' : ''}>← Prev</button>
+      <button class="btn btn-ghost btn-sm" onclick="reviewNext()"
+        ${curRound === total - 1 ? 'disabled style="opacity:0.35"' : ''}>Next →</button>
+      <button class="btn btn-primary btn-sm" onclick="showSummary()">Summary</button>
     </div>`;
 }
 
 // ─── Show round ───────────────────────────────────────────────────────────────
 function showRound(idx) {
   curRound = idx;
-  const total = cfg.numRounds;
-  document.getElementById('tRound').textContent = `Round ${idx + 1} / ${total}`;
+  document.getElementById('tRound').textContent = `Hand ${idx + 1} / ${rounds.length}`;
   document.getElementById('tableArea').innerHTML = renderRound(idx);
-  updateShoe();
-  resetCountReveal();
-
-  const isLast = idx === total - 1;
-  document.getElementById('tNext').textContent = reviewing
-    ? (isLast ? 'Back to Results →' : 'Next Round →')
-    : (isLast ? 'Guess the Count →' : 'Next Round →');
-
-  document.getElementById('tPrev').style.display = idx > 0 ? 'inline-block' : 'none';
-
-  // Scroll to top of content on round change
-  document.getElementById('tableArea').scrollTop = 0;
+  updateShoe(idx);
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (reviewing) {
+    barReview();
+  } else {
+    barInput();
+  }
+}
+
+// ─── Submit guess ─────────────────────────────────────────────────────────────
+function submitGuess() {
+  const raw = document.getElementById('rcInput')?.value;
+  if (raw === '' || raw == null) return;
+
+  const timeSec  = stopTimer();
+  const userRC   = parseInt(raw);
+  const actualRC = rounds.slice(0, curRound + 1).reduce((s, r) => s + r.delta, 0);
+  const decksLeft= Math.max(0.5, (shoe.length - rounds[curRound].shoeUsed) / 52);
+  const tc       = actualRC / decksLeft;
+  const off      = Math.abs(userRC - actualRC);
+  const cls      = off === 0 ? 'ok' : off <= 2 ? 'near' : 'off';
+
+  guesses.push({ userRC, actualRC, tc, timeSec, cls, off });
+  barResult(userRC, actualRC, tc, timeSec, cls);
 }
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 function nextAction() {
-  curRound < cfg.numRounds - 1 ? showRound(curRound + 1) : goResult();
+  if (curRound < rounds.length - 1) {
+    showRound(curRound + 1);
+  } else {
+    showSummary();
+  }
 }
+
 function prevRound() {
   if (curRound > 0) showRound(curRound - 1);
 }
+
+function reviewNext() {
+  if (curRound < rounds.length - 1) showRound(curRound + 1);
+}
+
 function toggleHV() {
   showHV = !showHV;
   document.getElementById('tHvToggle').textContent = showHV ? 'Hide Hi-Lo' : 'Show Hi-Lo';
@@ -870,41 +850,9 @@ function toggleHV() {
 
 // ─── Screen transitions ───────────────────────────────────────────────────────
 function setScreen(id) {
+  clearInterval(timerInterval);
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-}
-
-function startTraining() {
-  cfg = {
-    numDecks:   Math.max(1, Math.min(8,  parseInt(document.getElementById('iDecks').value)   || 6)),
-    numPlayers: Math.max(1, Math.min(7,  parseInt(document.getElementById('iPlayers').value) || 5)),
-    numRounds:  Math.max(1, Math.min(30, parseInt(document.getElementById('iRounds').value)  || 3)),
-  };
-  shoe      = makeShoe(cfg.numDecks);
-  si        = 0;
-  rounds    = [];
-  reviewing = false;
-  showHV    = false;
-  document.getElementById('tHvToggle').textContent = 'Show Hi-Lo';
-  for (let r = 0; r < cfg.numRounds; r++) rounds.push(simRound(cfg.numPlayers));
-  setScreen('game');
-  showRound(0);
-}
-
-function goResult() {
-  document.getElementById('rSub').textContent =
-    `After ${cfg.numRounds} round${cfg.numRounds !== 1 ? 's' : ''} — enter your Hi-Lo estimates.`;
-  document.getElementById('iRC').value = '';
-  document.getElementById('iTC').value = '';
-  document.getElementById('answerCard').style.display = 'none';
-  document.getElementById('rReview').style.display = 'none';
-  setScreen('result');
-}
-
-function goReview() {
-  reviewing = true;
-  setScreen('game');
-  showRound(0);
 }
 
 function goSetup() {
@@ -912,48 +860,89 @@ function goSetup() {
   setScreen('setup');
 }
 
-// ─── Count check ──────────────────────────────────────────────────────────────
-function checkCount() {
-  const rcRaw = document.getElementById('iRC').value;
-  const tcRaw = document.getElementById('iTC').value;
-  if (!rcRaw && !tcRaw) { alert('Enter at least one count value.'); return; }
+function startTraining() {
+  cfg = {
+    numDecks:   Math.max(1, Math.min(8,  parseInt(document.getElementById('iDecks').value)   || 6)),
+    numPlayers: Math.max(1, Math.min(7,  parseInt(document.getElementById('iPlayers').value) || 5)),
+    numRounds:  Math.max(1, Math.min(30, parseInt(document.getElementById('iRounds').value)  || 5)),
+  };
 
-  const actualRC   = rounds.reduce((s, r) => s + r.delta, 0);
-  const decksLeft  = (shoe.length - si) / 52;
-  const actualTC   = decksLeft > 0.5 ? actualRC / decksLeft : actualRC;
-  const userRC     = rcRaw ? parseInt(rcRaw)     : null;
-  const userTC     = tcRaw ? parseFloat(tcRaw)   : null;
-  const rcOff      = userRC !== null ? Math.abs(userRC - actualRC) : null;
+  shoe     = makeShoe(cfg.numDecks);
+  si       = 0;
+  rounds   = [];
+  guesses  = [];
+  reviewing= false;
+  showHV   = false;
+  document.getElementById('tHvToggle').textContent = 'Show Hi-Lo';
 
-  let grade, cls;
-  if (rcOff === null)   { grade = 'Skipped RC'; cls = 'near'; }
-  else if (rcOff === 0) { grade = 'Perfect — exact count!'; cls = 'ok'; }
-  else if (rcOff <= 2)  { grade = `Close — off by ${rcOff}`; cls = 'near'; }
-  else                  { grade = `Off by ${rcOff}`; cls = 'off'; }
+  const minPerRound = 2 * (cfg.numPlayers + 1) + 4;
+  for (let r = 0; r < cfg.numRounds; r++) {
+    if (shoe.length - si < minPerRound) break;
+    rounds.push(simRound(cfg.numPlayers));
+  }
+  cfg.numRounds = rounds.length;
 
-  const fmtN = n => (n >= 0 ? `+${n}` : `${n}`);
-  const fmtF = n => (n >= 0 ? `+${n.toFixed(1)}` : n.toFixed(1));
+  setScreen('game');
+  showRound(0);
+}
 
-  const bkHtml = rounds.map((r, i) => {
-    const c = r.delta > 0 ? 'bk-pos' : r.delta < 0 ? 'bk-neg' : 'bk-neu';
-    return `<span class="bk-chip ${c}">R${i+1}: ${fmtN(r.delta)}</span>`;
+// ─── Summary ─────────────────────────────────────────────────────────────────
+function showSummary() {
+  setScreen('summary');
+
+  const n       = guesses.length;
+  const exact   = guesses.filter(g => g.cls === 'ok').length;
+  const within2 = guesses.filter(g => g.cls !== 'off').length;
+  const avgTime = n ? (guesses.reduce((s, g) => s + g.timeSec, 0) / n) : 0;
+
+  const fmtN = n => n >= 0 ? `+${n}` : String(n);
+  const fmtF = n => (n >= 0 ? '+' : '') + n.toFixed(1);
+
+  const rowsHtml = guesses.map((g, i) => {
+    const mark = g.cls === 'ok' ? '✓' : g.cls === 'near' ? '~' : '✗';
+    const diff = g.userRC - g.actualRC;
+    const diffStr = diff === 0 ? 'exact' : `off ${diff > 0 ? '+' : ''}${diff}`;
+    return `<div class="rr ${g.cls}">
+      <span class="rr-n">H${i + 1}</span>
+      <span class="rr-mk">${mark}</span>
+      <span class="rr-v">you <b>${fmtN(g.userRC)}</b> · actual <b>${fmtN(g.actualRC)}</b> · ${diffStr} · TC ≈${fmtF(g.tc)}</span>
+      <span class="rr-t">${g.timeSec.toFixed(1)}s</span>
+    </div>`;
   }).join('');
 
-  const el = document.getElementById('answerCard');
-  el.style.display = 'block';
-  el.className = `answer-card ${cls}`;
-  el.innerHTML = `
-    <div class="answer-grade">${grade}</div>
-    <div class="answer-body">
-      <strong>Running Count:</strong>
-      ${userRC !== null ? `Your guess: <strong>${fmtN(userRC)}</strong> · ` : ''}Actual: <strong>${fmtN(actualRC)}</strong><br>
-      <strong>True Count:</strong>
-      ${userTC !== null ? `Your guess: <strong>${fmtF(userTC)}</strong> · ` : ''}Actual: <strong>${fmtF(actualTC)}</strong><br>
-      <strong>Decks left:</strong> ~${decksLeft.toFixed(2)}
-      <div class="breakdown">${bkHtml}</div>
-    </div>`;
+  const perfPct = n ? Math.round(exact / n * 100) : 0;
+  const perfColor = perfPct >= 80 ? '#2ecc71' : perfPct >= 50 ? 'var(--gold)' : '#e07070';
 
-  document.getElementById('rReview').style.display = 'block';
+  document.getElementById('summaryPanel').innerHTML = `
+    <h2>Session Complete</h2>
+    <p class="summary-sub">${cfg.numDecks}-deck shoe · ${cfg.numPlayers} players · ${n} hands</p>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num" style="color:${perfColor}">${perfPct}%</div>
+        <div class="stat-lbl">Exact</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">${within2}<span style="font-size:0.9rem;color:#888"> / ${n}</span></div>
+        <div class="stat-lbl">Within 2</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">${avgTime.toFixed(1)}<span style="font-size:0.9rem;color:#888">s</span></div>
+        <div class="stat-lbl">Avg Time</div>
+      </div>
+    </div>
+
+    <div class="round-list">${rowsHtml}</div>
+
+    <button class="btn btn-ghost" onclick="startReview()" style="margin-bottom:0.6rem">Review Cards</button>
+    <button class="btn btn-primary" onclick="startTraining()">New Shoe</button>
+    <button class="btn btn-ghost" onclick="goSetup()" style="margin-top:0.5rem">Change Settings</button>`;
+}
+
+function startReview() {
+  reviewing = true;
+  setScreen('game');
+  showRound(0);
 }
 </script>
 </body>

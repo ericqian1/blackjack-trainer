@@ -4,7 +4,9 @@ Visual Hi-Lo card counting trainer. Configure decks, players, and rounds — wat
 
 ## Live site
 
-After enabling GitHub Pages (Settings → Pages → Source: GitHub Actions), the app is available at `https://<your-username>.github.io/blackjack-trainer/`.
+**[https://ericqian1.github.io/blackjack-trainer/](https://ericqian1.github.io/blackjack-trainer/)**
+
+*(Enable once via Settings → Pages → Source: GitHub Actions — auto-deploys on every push to `main` after that.)*
 
 ## How it works
 

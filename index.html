@@ -4,23 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blackjack Count Trainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --felt: #0d5c0d;
-      --felt-dark: #093d09;
-      --felt-light: #127a12;
-      --gold: #d4a843;
-      --green-bright: #4fc04f;
-      --red-card: #cc1111;
-      --black-card: #111;
+      --bg:        #060f06;
+      --felt:      #0c400c;
+      --felt-mid:  #0f5010;
+      --felt-lite: #166016;
+      --gold:      #e8c050;
+      --gold-dim:  rgba(232,192,80,0.15);
+      --emerald:   #2ecc71;
+      --emerald-dim: rgba(46,204,113,0.18);
+      --red-card:  #c81414;
+      --black-card:#141414;
+      --glass:     rgba(0,0,0,0.42);
+      --border:    rgba(255,255,255,0.1);
+      --border-hi: rgba(255,255,255,0.2);
     }
 
     body {
-      background: var(--felt-dark);
-      color: #fff;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: #f0f0f0;
+      font-family: 'Inter', system-ui, sans-serif;
       min-height: 100vh;
     }
 
@@ -33,254 +42,292 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem;
       background:
-        radial-gradient(ellipse at 50% 0%, rgba(20,100,20,0.6) 0%, transparent 60%),
-        var(--felt-dark);
+        radial-gradient(ellipse 80% 55% at 50% 0%, rgba(20,110,20,0.55) 0%, transparent 100%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(10,60,10,0.4) 0%, transparent 100%),
+        var(--bg);
     }
 
     .logo {
-      font-size: 3rem;
-      letter-spacing: -1px;
+      font-size: 2.8rem;
       font-weight: 800;
-      text-shadow: 0 3px 12px rgba(0,0,0,0.7);
-      margin-bottom: 0.25rem;
+      letter-spacing: -1.5px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+      margin-bottom: 0.2rem;
       text-align: center;
     }
-
-    .logo span { color: var(--gold); }
+    .logo em { font-style: normal; color: var(--gold); }
 
     .tagline {
-      color: var(--green-bright);
-      font-size: 0.9rem;
+      color: var(--emerald);
+      font-size: 0.78rem;
+      font-weight: 600;
       text-align: center;
       margin-bottom: 2.5rem;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
+      opacity: 0.85;
     }
 
-    .card-panel {
-      background: rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 18px;
+    .glass-panel {
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
       padding: 2rem;
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      max-width: 390px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
     }
 
-    .form-row { margin-bottom: 1.4rem; }
+    .form-row { margin-bottom: 1.35rem; }
 
     label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--green-bright);
-      margin-bottom: 0.45rem;
+      letter-spacing: 0.1em;
+      color: var(--emerald);
+      margin-bottom: 0.4rem;
+      opacity: 0.9;
     }
 
-    .input-hint { color: #888; font-size: 0.72rem; margin-top: 0.25rem; }
+    .input-hint { color: #666; font-size: 0.7rem; margin-top: 0.22rem; }
 
-    input[type="number"], input[type="text"] {
+    input[type="number"] {
       width: 100%;
-      padding: 0.7rem 1rem;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 9px;
-      color: #fff;
-      font-size: 1.05rem;
+      padding: 0.65rem 0.95rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 10px;
+      color: #f0f0f0;
+      font-size: 1rem;
+      font-family: inherit;
       outline: none;
-      transition: border-color 0.2s, background 0.2s;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
       -moz-appearance: textfield;
     }
-    input[type="number"]::-webkit-inner-spin-button { opacity: 0.4; }
-    input[type="number"]:focus, input[type="text"]:focus {
-      border-color: var(--green-bright);
-      background: rgba(255,255,255,0.12);
+    input[type="number"]::-webkit-inner-spin-button { opacity: 0.3; }
+    input[type="number"]:focus {
+      border-color: var(--emerald);
+      background: rgba(255,255,255,0.09);
+      box-shadow: 0 0 0 3px rgba(46,204,113,0.12);
     }
 
+    /* Buttons */
     .btn {
       display: block;
       width: 100%;
-      padding: 0.9rem 1.2rem;
-      background: #1e7e1e;
+      padding: 0.85rem 1.2rem;
       border: none;
-      border-radius: 10px;
+      border-radius: 11px;
       color: #fff;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
+      font-family: inherit;
       cursor: pointer;
-      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.35);
       text-align: center;
+      transition: filter 0.15s, transform 0.1s, box-shadow 0.15s;
     }
-    .btn:hover { background: #2a9e2a; box-shadow: 0 4px 14px rgba(0,0,0,0.45); }
     .btn:active { transform: scale(0.97); }
-    .btn + .btn { margin-top: 0.65rem; }
+    .btn + .btn { margin-top: 0.6rem; }
+
+    .btn-primary {
+      background: linear-gradient(160deg, #1f8c1f 0%, #136813 100%);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.08) inset;
+    }
+    .btn-primary:hover { filter: brightness(1.15); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
 
     .btn-ghost {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
       box-shadow: none;
     }
-    .btn-ghost:hover { background: rgba(255,255,255,0.18); box-shadow: none; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.14); }
 
-    .btn-small {
+    .btn-danger {
+      background: rgba(200,30,30,0.22);
+      border: 1px solid rgba(200,80,80,0.3);
+      color: #faa;
+      box-shadow: none;
+    }
+    .btn-danger:hover { background: rgba(200,30,30,0.35); }
+
+    .btn-sm {
       display: inline-block;
       width: auto;
-      padding: 0.4rem 1rem;
-      font-size: 0.85rem;
+      padding: 0.38rem 0.9rem;
+      font-size: 0.8rem;
+      border-radius: 8px;
     }
 
-    .hilo-legend {
-      margin-top: 1.75rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 1.25rem;
-      font-size: 0.82rem;
-      color: #aaa;
+    /* Hi-Lo reference */
+    .hilo-ref {
+      margin-top: 1.6rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
       text-align: center;
     }
-    .hilo-legend strong { display: block; color: #ddd; margin-bottom: 0.6rem; }
-    .hl-chips { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
-    .hl-chip {
-      padding: 0.25rem 0.65rem;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.8rem;
-    }
-    .hl-plus  { background: rgba(80,200,80,0.2);  color: #6f6; border: 1px solid #3a3; }
-    .hl-zero  { background: rgba(180,180,180,0.15); color: #bbb; border: 1px solid #555; }
-    .hl-minus { background: rgba(220,60,60,0.2);  color: #f77; border: 1px solid #944; }
-
-    /* ── Game ────────────────────────────────────────────────────────────── */
-    #game {
-      min-height: 100vh;
-      background: var(--felt);
-      background-image:
-        radial-gradient(ellipse at 50% -10%, rgba(30,130,30,0.4) 0%, transparent 55%);
-    }
-
-    .game-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.7rem 1.25rem;
-      background: rgba(0,0,0,0.35);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 20px;
-      padding: 0.3rem 0.9rem;
-      font-size: 0.8rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .badge-gold { border-color: var(--gold); color: var(--gold); }
-
-    .shoe-meter {
-      flex: 1;
-      min-width: 120px;
-      max-width: 200px;
-    }
-    .shoe-label { font-size: 0.7rem; color: #999; margin-bottom: 3px; }
-    .shoe-track {
-      height: 6px;
-      background: rgba(255,255,255,0.12);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .shoe-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #4fc04f, #c8e04f);
-      border-radius: 3px;
-      transition: width 0.4s ease;
-    }
-
-    .game-content {
-      padding: 1rem 1.25rem;
-      max-width: 1160px;
-      margin: 0 auto;
-    }
-
-    /* Dealer strip */
-    .dealer-strip {
-      background: rgba(0,0,0,0.25);
-      border-radius: 12px;
-      padding: 0.9rem 1rem;
-      margin-bottom: 0.9rem;
-      border: 1px solid rgba(255,255,255,0.07);
-    }
-
-    .section-label {
+    .hilo-ref-title {
       font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
+      color: #666;
+      margin-bottom: 0.7rem;
+    }
+    .hilo-chips { display: flex; justify-content: center; gap: 0.6rem; }
+    .hilo-chip {
+      padding: 0.22rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .hc-plus  { background: rgba(46,204,113,0.15); color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
+    .hc-zero  { background: rgba(180,180,180,0.1);  color: #888;    border: 1px solid rgba(180,180,180,0.2); }
+    .hc-minus { background: rgba(220,50,50,0.15);   color: #e07070; border: 1px solid rgba(220,50,50,0.3); }
+
+    /* ── Game screen ─────────────────────────────────────────────────────── */
+    #game {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse 100% 40% at 50% 0%,   rgba(22,120,22,0.35) 0%, transparent 100%),
+        radial-gradient(ellipse 70%  35% at 50% 100%, rgba(8, 50, 8, 0.5)  0%, transparent 100%),
+        var(--felt);
+    }
+
+    /* Topbar */
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.6rem 1.1rem;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      flex-wrap: wrap;
+    }
+
+    .round-pill {
+      background: var(--gold-dim);
+      border: 1px solid rgba(232,192,80,0.35);
+      border-radius: 20px;
+      padding: 0.28rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
       color: var(--gold);
-      margin-bottom: 0.55rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    /* Players grid */
-    .players-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-      gap: 0.7rem;
+    .shoe-wrap {
+      flex: 1;
+      min-width: 110px;
+      max-width: 180px;
+    }
+    .shoe-lbl { font-size: 0.65rem; color: #666; margin-bottom: 3px; font-weight: 500; }
+    .shoe-track {
+      height: 5px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .shoe-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #2ecc71, #a8e063);
+      border-radius: 3px;
+      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
     }
 
-    .player-box {
-      background: rgba(0,0,0,0.2);
+    .topbar-actions { display: flex; gap: 0.45rem; margin-left: auto; }
+
+    /* Table content */
+    .table-area {
+      padding: 1rem 1.1rem 6rem;
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    .dealer-zone {
+      background: rgba(0,0,0,0.28);
+      backdrop-filter: blur(8px);
       border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 10px;
-      padding: 0.75rem 0.8rem;
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.85rem;
     }
 
-    .player-name {
-      font-size: 0.7rem;
+    .zone-label {
+      font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #7dc87d;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      opacity: 0.8;
       margin-bottom: 0.5rem;
     }
 
-    .hand-row {
+    .players-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+      gap: 0.65rem;
+    }
+
+    .player-tile {
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 0.7rem 0.8rem;
+      transition: border-color 0.2s;
+    }
+
+    .player-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #4fc07a;
+      margin-bottom: 0.45rem;
+    }
+
+    .hand-cards {
       display: flex;
       flex-wrap: wrap;
       gap: 4px;
       align-items: flex-end;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
+    .hand-cards.hv-mode { margin-bottom: 20px; }
 
-    .hand-total {
-      font-size: 0.72rem;
-      color: #aaa;
-      margin-top: 2px;
+    .hand-score {
+      font-size: 0.7rem;
+      color: #777;
+      font-weight: 500;
     }
-    .hand-total .bust { color: #f77; }
-    .hand-total .bj   { color: var(--gold); }
+    .hand-score .s-bust { color: #e07070; }
+    .hand-score .s-bj   { color: var(--gold); font-weight: 700; }
 
-    .split-label {
-      font-size: 0.65rem;
-      color: #888;
-      margin: 4px 0 2px;
+    .split-divider {
+      font-size: 0.6rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
+      color: #555;
+      margin: 5px 0 3px;
     }
 
-    /* ── Cards ───────────────────────────────────────────────────────────── */
+    /* ── Playing cards ───────────────────────────────────────────────────── */
     .card {
-      width: 52px;
-      height: 74px;
-      background: #fafafa;
-      border-radius: 5px;
-      box-shadow: 1px 2px 6px rgba(0,0,0,0.55);
+      width: 54px;
+      height: 78px;
+      background: #fffef6;
+      border-radius: 6px;
+      box-shadow:
+        0 2px 8px rgba(0,0,0,0.55),
+        0 1px 2px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.9);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -291,181 +338,226 @@
       flex-shrink: 0;
       position: relative;
     }
-
-    .card.red  { color: var(--red-card); }
+    .card.red   { color: var(--red-card); }
     .card.black { color: var(--black-card); }
 
-    .card-tl { font-size: 11px; line-height: 1.15; text-align: left; }
-    .card-br { font-size: 11px; line-height: 1.15; transform: rotate(180deg); align-self: flex-end; }
-    .card-mid { text-align: center; font-size: 20px; line-height: 1; flex: 1; display: flex; align-items: center; justify-content: center; }
+    .c-tl { font-size: 11px; line-height: 1.2; }
+    .c-br { font-size: 11px; line-height: 1.2; transform: rotate(180deg); align-self: flex-end; }
+    .c-mid {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
+    }
 
     .card.back {
-      background: #1a4799;
+      background: #1a3c82;
       background-image:
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 4px, transparent 4px, transparent 8px),
-        repeating-linear-gradient(-45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 4px, transparent 4px, transparent 8px);
-      border: 2px solid #1e3a7a;
+        repeating-linear-gradient( 45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 6px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0.06) 1px, transparent 1px, transparent 6px);
+      border: 1px solid #162f66;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
     }
-    .card.back .card-tl,
-    .card.back .card-br,
-    .card.back .card-mid { color: transparent; }
     .card.back::after {
       content: '';
       position: absolute;
-      inset: 4px;
-      border: 1px solid rgba(255,255,255,0.15);
+      inset: 5px;
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 3px;
     }
+    .card.back .c-tl, .card.back .c-br, .card.back .c-mid { opacity: 0; }
 
-    .card.dealt {
-      animation: deal 0.22s ease-out backwards;
-    }
-    @keyframes deal {
-      from { opacity: 0; transform: translateY(-18px) scale(0.82); }
+    .card.pop { animation: cardPop 0.2s cubic-bezier(0.34,1.4,0.64,1) backwards; }
+    @keyframes cardPop {
+      from { opacity: 0; transform: translateY(-14px) scale(0.85); }
       to   { opacity: 1; transform: none; }
     }
 
-    /* Hi-Lo value badge on card */
-    .card-hv {
+    .hv-tag {
       position: absolute;
-      bottom: -14px;
+      bottom: -16px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 10px;
       font-weight: 800;
-      font-family: 'Segoe UI', sans-serif;
-      border-radius: 10px;
-      padding: 0 5px;
+      font-family: 'Inter', sans-serif;
       white-space: nowrap;
+      line-height: 1;
     }
-    .card-hv.plus  { color: #6f6; }
-    .card-hv.zero  { color: #aaa; }
-    .card-hv.minus { color: #f77; }
+    .hv-tag.p { color: #2ecc71; }
+    .hv-tag.z { color: #666; }
+    .hv-tag.n { color: #e07070; }
 
-    .cards-with-hv { margin-bottom: 18px; }
-
-    /* ── Controls bar ────────────────────────────────────────────────────── */
-    .game-footer {
-      position: sticky;
-      bottom: 0;
-      background: rgba(6, 40, 6, 0.92);
-      backdrop-filter: blur(8px);
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding: 0.75rem 1.25rem;
+    /* ── Sticky footer ───────────────────────────────────────────────────── */
+    .game-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(4,18,4,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid rgba(255,255,255,0.09);
+      padding: 0.7rem 1.1rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 0.75rem;
+      z-index: 10;
     }
 
-    .footer-info { font-size: 0.8rem; color: #999; }
-    .footer-info strong { color: #ddd; }
+    /* Reveal pill */
+    .reveal-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.38rem 0.85rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: #777;
+      font-weight: 600;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .reveal-pill:hover { background: rgba(255,255,255,0.11); color: #aaa; }
 
-    .footer-btns { display: flex; gap: 0.6rem; }
-    .footer-btns .btn { width: auto; }
+    .count-info {
+      font-size: 0.8rem;
+      color: #aaa;
+      font-weight: 500;
+    }
+    .count-info strong { color: #e0e0e0; }
+    .count-info .ci-pos { color: #2ecc71; font-weight: 700; }
+    .count-info .ci-neg { color: #e07070; font-weight: 700; }
+    .count-info .ci-hide {
+      margin-left: 0.5rem;
+      font-size: 0.7rem;
+      color: #555;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .count-info .ci-hide:hover { color: #888; }
 
-    /* ── Count screen ────────────────────────────────────────────────────── */
+    .bar-btns { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+    /* ── Result screen ───────────────────────────────────────────────────── */
     #result {
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem;
       background:
-        radial-gradient(ellipse at 50% 0%, rgba(20,80,20,0.5) 0%, transparent 65%),
-        var(--felt-dark);
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(15,80,15,0.5) 0%, transparent 100%),
+        var(--bg);
     }
 
     .result-panel {
-      background: rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 18px;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
       padding: 2rem;
       width: 100%;
-      max-width: 480px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      max-width: 460px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
     }
 
-    .result-panel h2 { font-size: 1.4rem; margin-bottom: 0.3rem; }
-    .result-panel .sub { color: #999; font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .result-panel h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+    .result-panel .rp-sub {
+      color: #666;
+      font-size: 0.82rem;
+      margin-bottom: 1.4rem;
+    }
 
-    .count-fields {
+    .count-row {
       display: flex;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
+      gap: 0.7rem;
+      margin-bottom: 0.9rem;
     }
-    .count-field { flex: 1; }
+    .count-col { flex: 1; }
 
-    .answer-box {
-      border-radius: 12px;
-      padding: 1.1rem 1.2rem;
-      margin: 1.25rem 0;
+    .answer-card {
+      border-radius: 13px;
+      padding: 1rem 1.1rem;
+      margin: 1.1rem 0;
     }
-    .answer-box.correct { background: rgba(50,200,50,0.12); border: 1px solid #2c2; }
-    .answer-box.close   { background: rgba(220,180,0,0.12);  border: 1px solid #aa0; }
-    .answer-box.wrong   { background: rgba(220,50,50,0.12);  border: 1px solid #a22; }
+    .answer-card.ok   { background: rgba(46,204,113,0.1); border: 1px solid rgba(46,204,113,0.35); }
+    .answer-card.near { background: rgba(232,192,80,0.1);  border: 1px solid rgba(232,192,80,0.35); }
+    .answer-card.off  { background: rgba(220,50,50,0.1);   border: 1px solid rgba(220,50,50,0.3); }
 
     .answer-grade {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       font-weight: 800;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.55rem;
     }
-    .answer-box.correct .answer-grade { color: #4f4; }
-    .answer-box.close   .answer-grade { color: #fc0; }
-    .answer-box.wrong   .answer-grade { color: #f77; }
+    .answer-card.ok   .answer-grade { color: #2ecc71; }
+    .answer-card.near .answer-grade { color: var(--gold); }
+    .answer-card.off  .answer-grade { color: #e07070; }
 
-    .answer-stats {
-      font-size: 0.83rem;
-      line-height: 1.8;
-      color: #ccc;
+    .answer-body {
+      font-size: 0.8rem;
+      line-height: 1.85;
+      color: #bbb;
     }
-    .answer-stats strong { color: #fff; }
+    .answer-body strong { color: #eee; }
 
-    .round-breakdown {
-      font-size: 0.78rem;
-      color: #999;
-      margin-top: 0.4rem;
+    .breakdown {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.55rem;
     }
-    .round-breakdown span {
-      display: inline-block;
-      margin-right: 0.6rem;
-      white-space: nowrap;
+    .bk-chip {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
     }
-    .rc-pos { color: #6f6; }
-    .rc-neg { color: #f77; }
-    .rc-neu { color: #aaa; }
+    .bk-pos { background: rgba(46,204,113,0.15); color: #2ecc71; }
+    .bk-neg { background: rgba(220,50,50,0.15);  color: #e07070; }
+    .bk-neu { background: rgba(150,150,150,0.12); color: #888; }
   </style>
 </head>
 <body>
 
 <!-- ── SETUP ──────────────────────────────────────────────────────────────── -->
 <div id="setup" class="screen active">
-  <div class="logo">Black<span>jack</span></div>
+  <div class="logo">Black<em>jack</em></div>
   <p class="tagline">Hi-Lo Count Trainer</p>
 
-  <div class="card-panel">
+  <div class="glass-panel">
     <div class="form-row">
       <label for="iDecks">Number of Decks</label>
       <input type="number" id="iDecks" min="1" max="8" value="6">
-      <div class="input-hint">Standard casino 6-deck shoe</div>
+      <div class="input-hint">Standard casino uses 6-deck shoes</div>
     </div>
     <div class="form-row">
-      <label for="iPlayers">Number of Players</label>
+      <label for="iPlayers">Players at the Table</label>
       <input type="number" id="iPlayers" min="1" max="7" value="5">
-      <div class="input-hint">Players at the table (not counting you)</div>
+      <div class="input-hint">Excludes you — count all visible hands</div>
     </div>
     <div class="form-row">
-      <label for="iRounds">Number of Rounds</label>
+      <label for="iRounds">Rounds per Session</label>
       <input type="number" id="iRounds" min="1" max="30" value="3">
-      <div class="input-hint">Rounds before you guess the count</div>
+      <div class="input-hint">Rounds dealt before you guess the count</div>
     </div>
-    <button class="btn" onclick="startTraining()">Start Training</button>
+    <button class="btn btn-primary" onclick="startTraining()">Start Training</button>
 
-    <div class="hilo-legend">
-      <strong>Hi-Lo System Reference</strong>
-      <div class="hl-chips">
-        <span class="hl-chip hl-plus">2–6 &nbsp;+1</span>
-        <span class="hl-chip hl-zero">7–9 &nbsp; 0</span>
-        <span class="hl-chip hl-minus">10–A &nbsp;−1</span>
+    <div class="hilo-ref">
+      <div class="hilo-ref-title">Hi-Lo System</div>
+      <div class="hilo-chips">
+        <span class="hilo-chip hc-plus">2–6 &nbsp;+1</span>
+        <span class="hilo-chip hc-zero">7–9 &nbsp; 0</span>
+        <span class="hilo-chip hc-minus">10–A &nbsp;−1</span>
       </div>
     </div>
   </div>
@@ -473,22 +565,27 @@
 
 <!-- ── GAME ───────────────────────────────────────────────────────────────── -->
 <div id="game" class="screen">
-  <div class="game-topbar">
-    <div class="badge badge-gold" id="tRound">Round 1 / 3</div>
-    <div class="shoe-meter">
-      <div class="shoe-label" id="tShoeLabel">Shoe: 312 left</div>
-      <div class="shoe-track"><div class="shoe-fill" id="shoeFill" style="width:100%"></div></div>
+  <div class="topbar">
+    <div class="round-pill" id="tRound">Round 1 / 3</div>
+    <div class="shoe-wrap">
+      <div class="shoe-lbl" id="tShoeLabel">Shoe: 312 left</div>
+      <div class="shoe-track"><div class="shoe-bar" id="tShoeFill" style="width:100%"></div></div>
     </div>
-    <button class="btn btn-small btn-ghost" id="tHvToggle" onclick="toggleHV()">Show Hi-Lo Values</button>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost btn-sm" id="tHvToggle" onclick="toggleHV()">Show Hi-Lo</button>
+      <button class="btn btn-danger btn-sm" onclick="goSetup()">New Session</button>
+    </div>
   </div>
 
-  <div class="game-content" id="gameContent"></div>
+  <div class="table-area" id="tableArea"></div>
 
-  <div class="game-footer">
-    <div class="footer-info" id="tFooterInfo">Watch every card carefully.</div>
-    <div class="footer-btns">
-      <button class="btn btn-small btn-ghost" id="tPrev" onclick="prevRound()" style="display:none">← Prev</button>
-      <button class="btn btn-small" id="tNext" onclick="nextAction()">Next Round →</button>
+  <div class="game-bar">
+    <div id="countArea">
+      <!-- populated by JS — either reveal-pill or count-info -->
+    </div>
+    <div class="bar-btns">
+      <button class="btn btn-ghost btn-sm" id="tPrev" onclick="prevRound()" style="display:none">← Prev</button>
+      <button class="btn btn-primary btn-sm" id="tNext" onclick="nextAction()">Next Round →</button>
     </div>
   </div>
 </div>
@@ -497,23 +594,23 @@
 <div id="result" class="screen">
   <div class="result-panel">
     <h2>What's the Count?</h2>
-    <p class="sub" id="rSub">After 3 rounds — enter your Hi-Lo estimates below.</p>
+    <p class="rp-sub" id="rSub">After 3 rounds — enter your Hi-Lo estimates.</p>
 
-    <div class="count-fields">
-      <div class="count-field">
+    <div class="count-row">
+      <div class="count-col">
         <label for="iRC">Running Count</label>
-        <input type="number" id="iRC" placeholder="e.g. +4" autofocus>
+        <input type="number" id="iRC" placeholder="e.g. −4" autofocus>
       </div>
-      <div class="count-field">
+      <div class="count-col">
         <label for="iTC">True Count</label>
-        <input type="number" id="iTC" step="1" placeholder="e.g. +2">
+        <input type="number" id="iTC" step="1" placeholder="e.g. −2">
       </div>
     </div>
-    <button class="btn" onclick="checkCount()">Check My Count</button>
+    <button class="btn btn-primary" onclick="checkCount()">Check My Count</button>
 
-    <div id="answerBox" style="display:none"></div>
+    <div id="answerCard" style="display:none"></div>
 
-    <button class="btn btn-ghost" id="rReview" style="display:none;margin-top:0.6rem" onclick="goReview()">Review Dealt Cards</button>
+    <button class="btn btn-ghost" id="rReview" style="display:none;margin-top:0.55rem" onclick="goReview()">Review Dealt Cards</button>
     <button class="btn btn-ghost" style="margin-top:0.5rem" onclick="goSetup()">New Session</button>
   </div>
 </div>
@@ -521,32 +618,32 @@
 <script>
 'use strict';
 
-// ─── Constants ───────────────────────────────────────────────────────────────
+// ─── Constants ────────────────────────────────────────────────────────────────
 const RANKS = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
 const SUITS = ['♠','♥','♦','♣'];
 const RED   = new Set(['♥','♦']);
 
-// ─── Card utilities ───────────────────────────────────────────────────────────
+// ─── Card math ────────────────────────────────────────────────────────────────
 const hiloVal = r => ['2','3','4','5','6'].includes(r) ? 1 : ['7','8','9'].includes(r) ? 0 : -1;
 
-function cardPoints(r) {
+function pts(r) {
   if (r === 'A') return 11;
   if (['J','Q','K','10'].includes(r)) return 10;
   return +r;
 }
 
-function handTotal(cards) {
-  let sum = 0, aces = 0;
-  for (const c of cards) { sum += cardPoints(c.rank); if (c.rank === 'A') aces++; }
-  while (sum > 21 && aces-- > 0) sum -= 10;
-  return sum;
+function total(cards) {
+  let s = 0, a = 0;
+  for (const c of cards) { s += pts(c.rank); if (c.rank === 'A') a++; }
+  while (s > 21 && a-- > 0) s -= 10;
+  return s;
 }
 
 function isSoft(cards) {
-  let sum = 0, aces = 0;
-  for (const c of cards) { sum += cardPoints(c.rank); if (c.rank === 'A') aces++; }
-  while (sum > 21 && aces > 0) { sum -= 10; aces--; }
-  return aces > 0 && sum <= 21;
+  let s = 0, a = 0;
+  for (const c of cards) { s += pts(c.rank); if (c.rank === 'A') a++; }
+  while (s > 21 && a > 0) { s -= 10; a--; }
+  return a > 0 && s <= 21;
 }
 
 // ─── Shoe ─────────────────────────────────────────────────────────────────────
@@ -557,207 +654,194 @@ function makeShoe(n) {
       for (const rank of RANKS)
         s.push({ rank, suit });
   for (let i = s.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = 0 | (Math.random() * (i + 1));
     [s[i], s[j]] = [s[j], s[i]];
   }
   return s;
 }
 
 // ─── Basic strategy ───────────────────────────────────────────────────────────
-function decide(hand, dealerUp, firstAction) {
-  const dv  = Math.min(cardPoints(dealerUp.rank), 10);
-  const tot = handTotal(hand);
-  const soft = isSoft(hand);
+function decide(hand, dealerUp, first) {
+  const dv  = Math.min(pts(dealerUp.rank), 10);
+  const tot = total(hand);
 
-  // Pairs (only on first action with 2 cards)
-  if (firstAction && hand.length === 2) {
-    const [a, b] = hand;
-    const pv = cardPoints(a.rank);
-    if (pv === cardPoints(b.rank)) {
+  if (first && hand.length === 2) {
+    const pv = pts(hand[0].rank);
+    if (pv === pts(hand[1].rank)) {
       if (pv === 11) return 'split';
       if (pv === 10) return 'stand';
       if (pv === 9)  return [2,3,4,5,6,8,9].includes(dv) ? 'split' : 'stand';
       if (pv === 8)  return 'split';
       if (pv === 7)  return dv <= 7 ? 'split' : 'hit';
       if (pv === 6)  return dv <= 6 ? 'split' : 'hit';
-      // 55: fall through to hard 10
       if (pv === 4)  return 'hit';
       if (pv <= 3)   return dv <= 7 ? 'split' : 'hit';
+      // 55: fall through to hard 10
     }
   }
 
-  // Soft hands
-  if (soft) {
+  if (isSoft(hand)) {
     if (tot >= 19)  return 'stand';
     if (tot === 18) {
-      if ([3,4,5,6].includes(dv)) return firstAction ? 'double' : 'stand';
+      if ([3,4,5,6].includes(dv)) return first ? 'double' : 'stand';
       return [2,7,8].includes(dv) ? 'stand' : 'hit';
     }
-    if (tot === 17) return ([3,4,5,6].includes(dv) && firstAction) ? 'double' : 'hit';
-    if (tot >= 15)  return ([4,5,6].includes(dv)   && firstAction) ? 'double' : 'hit';
-    if (tot >= 13)  return ([5,6].includes(dv)     && firstAction) ? 'double' : 'hit';
+    if (tot === 17) return ([3,4,5,6].includes(dv) && first) ? 'double' : 'hit';
+    if (tot >= 15)  return ([4,5,6].includes(dv)   && first) ? 'double' : 'hit';
+    if (tot >= 13)  return ([5,6].includes(dv)     && first) ? 'double' : 'hit';
     return 'hit';
   }
 
-  // Hard totals
   if (tot >= 17) return 'stand';
   if (tot >= 13) return dv <= 6 ? 'stand' : 'hit';
   if (tot === 12) return [4,5,6].includes(dv) ? 'stand' : 'hit';
-  if (tot === 11) return firstAction ? 'double' : 'hit';
-  if (tot === 10) return (dv <= 9 && firstAction) ? 'double' : 'hit';
-  if (tot === 9)  return ([3,4,5,6].includes(dv) && firstAction) ? 'double' : 'hit';
+  if (tot === 11) return first ? 'double' : 'hit';
+  if (tot === 10) return (dv <= 9 && first) ? 'double' : 'hit';
+  if (tot === 9)  return ([3,4,5,6].includes(dv) && first) ? 'double' : 'hit';
   return 'hit';
 }
 
 // ─── Simulation ───────────────────────────────────────────────────────────────
-let shoe, shoeIdx;
-const pop = () => shoe[shoeIdx++];
+let shoe, si;
+const pop = () => shoe[si++];
 
-function playHand(cards, dealerUp, allowSplit = true) {
-  // Returns array of final hands (>1 if split)
-  const action = decide(cards, dealerUp, true);
-
-  if (action === 'split' && allowSplit) {
-    const h1 = [cards[0], pop()];
-    const h2 = [cards[1], pop()];
-    // Play each post-split hand (no re-split for simplicity)
-    return [...playHandOnce(h1, dealerUp), ...playHandOnce(h2, dealerUp)];
+function playHand(cards, up, canSplit = true) {
+  const act = decide(cards, up, true);
+  if (act === 'split' && canSplit) {
+    const h1 = [cards[0], pop()], h2 = [cards[1], pop()];
+    return [...playOnce(h1, up), ...playOnce(h2, up)];
   }
-  if (action === 'double') { cards.push(pop()); return [cards]; }
-  if (action === 'stand')  return [cards];
-
-  // Hit until stand/bust
+  if (act === 'double') { cards.push(pop()); return [cards]; }
+  if (act === 'stand')  return [cards];
   while (true) {
     cards.push(pop());
-    const t = handTotal(cards);
-    if (t >= 21) return [cards];
-    const next = decide(cards, dealerUp, false);
-    if (next === 'stand') return [cards];
+    if (total(cards) >= 21) return [cards];
+    if (decide(cards, up, false) === 'stand') return [cards];
   }
 }
 
-function playHandOnce(cards, dealerUp) {
+function playOnce(cards, up) {
   while (true) {
-    const t = handTotal(cards);
-    if (t >= 21) return [cards];
-    const act = decide(cards, dealerUp, cards.length === 2);
-    if (act === 'stand') return [cards];
-    if (act === 'double') { cards.push(pop()); return [cards]; }
-    cards.push(pop()); // hit
+    if (total(cards) >= 21) return [cards];
+    const a = decide(cards, up, cards.length === 2);
+    if (a === 'stand') return [cards];
+    if (a === 'double') { cards.push(pop()); return [cards]; }
+    cards.push(pop());
   }
 }
 
-function simulateRound(numPlayers) {
-  // Initial deal order: p1,p2,...,dealer,p1,p2,...,dealer (hole down)
-  const pHands = Array.from({length: numPlayers}, () => []);
-  const dHand  = [];
+function simRound(numPlayers) {
+  const ph = Array.from({length: numPlayers}, () => []);
+  const dh = [];
+  for (let p = 0; p < numPlayers; p++) ph[p].push(pop());
+  dh.push(pop());
+  for (let p = 0; p < numPlayers; p++) ph[p].push(pop());
+  dh.push(pop());
 
-  for (let p = 0; p < numPlayers; p++) pHands[p].push(pop());
-  dHand.push(pop());
-  for (let p = 0; p < numPlayers; p++) pHands[p].push(pop());
-  dHand.push(pop()); // hole card
+  const up = dh[0];
+  const players = ph.map(h => playHand(h.slice(), up));
+  while (total(dh) < 17) dh.push(pop());
 
-  const dealerUp = dHand[0];
-
-  // Players act
-  const finalHands = pHands.map(h => playHand(h.slice(), dealerUp));
-
-  // Dealer plays (reveal hole, then hit to 17+)
-  while (handTotal(dHand) < 17) dHand.push(pop());
-
-  // Running count delta for this round (all cards now face-up)
   let delta = 0;
-  for (const hands of finalHands)
-    for (const h of hands)
-      for (const c of h) delta += hiloVal(c.rank);
-  for (const c of dHand) delta += hiloVal(c.rank);
+  for (const hands of players) for (const h of hands) for (const c of h) delta += hiloVal(c.rank);
+  for (const c of dh) delta += hiloVal(c.rank);
 
-  return { dealer: dHand, players: finalHands, delta };
+  return { dealer: dh, players, delta };
 }
 
-// ─── App State ────────────────────────────────────────────────────────────────
-let cfg       = {};        // numDecks, numPlayers, numRounds
-let rounds    = [];        // simulated round data
-let curRound  = 0;
-let showHV    = false;     // show hi-lo value badges on cards
-let reviewing = false;     // came back from result screen
+// ─── State ────────────────────────────────────────────────────────────────────
+let cfg = {}, rounds = [], curRound = 0, showHV = false, reviewing = false;
 
 // ─── Card rendering ───────────────────────────────────────────────────────────
-function renderCard(card, back = false, delay = 0) {
-  if (back) {
-    return `<div class="card back dealt" style="animation-delay:${delay}ms"></div>`;
-  }
+function cardHtml(card, delay) {
   const color = RED.has(card.suit) ? 'red' : 'black';
   const hv    = hiloVal(card.rank);
-  const hvCls = hv > 0 ? 'plus' : hv < 0 ? 'minus' : 'zero';
-  const hvTxt = hv > 0 ? '+1' : hv < 0 ? '−1' : '0';
-  const hvBadge = showHV
-    ? `<span class="card-hv ${hvCls}">${hvTxt}</span>`
+  const hvTag = showHV
+    ? `<span class="hv-tag ${hv>0?'p':hv<0?'n':'z'}">${hv>0?'+1':hv<0?'−1':'0'}</span>`
     : '';
-  return `<div class="card ${color} dealt ${showHV ? 'cards-with-hv' : ''}" style="animation-delay:${delay}ms">
-    <div class="card-tl">${card.rank}<br>${card.suit}</div>
-    <div class="card-mid">${card.suit}</div>
-    <div class="card-br">${card.rank}<br>${card.suit}</div>
-    ${hvBadge}
+  return `<div class="card ${color} pop" style="animation-delay:${delay}ms">
+    <div class="c-tl">${card.rank}<br>${card.suit}</div>
+    <div class="c-mid">${card.suit}</div>
+    <div class="c-br">${card.rank}<br>${card.suit}</div>
+    ${hvTag}
   </div>`;
 }
 
-function totalLabel(cards) {
-  const t = handTotal(cards);
-  if (t > 21) return `<span class="bust">Bust (${t})</span>`;
-  if (t === 21 && cards.length === 2) return `<span class="bj">Blackjack!</span>`;
-  const s = isSoft(cards) ? ' soft' : '';
-  return `${t}${s}`;
+function scoreHtml(cards) {
+  const t = total(cards);
+  if (t > 21) return `<span class="s-bust">Bust (${t})</span>`;
+  if (t === 21 && cards.length === 2) return `<span class="s-bj">Blackjack</span>`;
+  return `${t}${isSoft(cards) ? ' soft' : ''}`;
 }
 
-// ─── Game rendering ───────────────────────────────────────────────────────────
+// ─── Render round ─────────────────────────────────────────────────────────────
 function renderRound(idx) {
   const r = rounds[idx];
-  let delay = 0;
-  const step = 70;
+  const hvc = showHV ? ' hv-mode' : '';
+  let d = 0;
 
-  // Dealer
-  let dealerCards = r.dealer.map((c, i) => renderCard(c, false, delay + i * step)).join('');
-  delay += r.dealer.length * step;
+  const dealerCards = r.dealer.map((c, i) => cardHtml(c, d + i * 65)).join('');
+  d += r.dealer.length * 65;
 
-  let html = `<div class="dealer-strip">
-    <div class="section-label">Dealer</div>
-    <div class="hand-row ${showHV ? 'cards-with-hv' : ''}">${dealerCards}</div>
-    <div class="hand-total">${totalLabel(r.dealer)}</div>
-  </div>
-  <div class="players-grid">`;
+  let html = `<div class="dealer-zone">
+    <div class="zone-label">Dealer</div>
+    <div class="hand-cards${hvc}">${dealerCards}</div>
+    <div class="hand-score">${scoreHtml(r.dealer)}</div>
+  </div><div class="players-grid">`;
 
   for (let p = 0; p < r.players.length; p++) {
     const hands = r.players[p];
-    html += `<div class="player-box"><div class="player-name">Player ${p + 1}</div>`;
+    html += `<div class="player-tile"><div class="player-title">Player ${p + 1}</div>`;
     hands.forEach((hand, hi) => {
-      if (hands.length > 1) html += `<div class="split-label">Hand ${hi + 1}</div>`;
-      const cHtml = hand.map((c, ci) => renderCard(c, false, delay + ci * step)).join('');
-      delay += hand.length * step;
-      html += `<div class="hand-row ${showHV ? 'cards-with-hv' : ''}">${cHtml}</div>
-               <div class="hand-total">${totalLabel(hand)}</div>`;
+      if (hands.length > 1) html += `<div class="split-divider">Hand ${hi + 1}</div>`;
+      const cHtml = hand.map((c, ci) => cardHtml(c, d + ci * 65)).join('');
+      d += hand.length * 65;
+      html += `<div class="hand-cards${hvc}">${cHtml}</div><div class="hand-score">${scoreHtml(hand)}</div>`;
     });
     html += '</div>';
   }
 
-  html += '</div>';
-  return html;
+  return html + '</div>';
 }
 
-function updateShoeBar() {
-  const total = shoe.length;
-  const left  = total - shoeIdx;
-  const pct   = (left / total * 100).toFixed(1);
-  document.getElementById('tShoeLabel').textContent = `Shoe: ${left} cards left`;
-  document.getElementById('shoeFill').style.width   = pct + '%';
+// ─── Shoe bar ─────────────────────────────────────────────────────────────────
+function updateShoe() {
+  const left = shoe.length - si;
+  const pct  = (left / shoe.length * 100).toFixed(1);
+  document.getElementById('tShoeLabel').textContent = `Shoe: ${left} left`;
+  document.getElementById('tShoeFill').style.width  = pct + '%';
 }
 
+// ─── Count reveal ─────────────────────────────────────────────────────────────
+let countShown = false;
+
+function resetCountReveal() {
+  countShown = false;
+  document.getElementById('countArea').innerHTML =
+    `<div class="reveal-pill" onclick="showCount()">🔒 Reveal count</div>`;
+}
+
+function showCount() {
+  countShown = true;
+  const r   = rounds[curRound];
+  const cum = rounds.slice(0, curRound + 1).reduce((s, x) => s + x.delta, 0);
+  const fmt = n => `<span class="${n>0?'ci-pos':n<0?'ci-neg':''}">${n>0?'+':''}${n}</span>`;
+  document.getElementById('countArea').innerHTML =
+    `<div class="count-info">
+      Round ${curRound + 1}: ${fmt(r.delta)}
+      &nbsp;·&nbsp; Running: <strong>${fmt(cum)}</strong>
+      <span class="ci-hide" onclick="resetCountReveal()">hide</span>
+    </div>`;
+}
+
+// ─── Show round ───────────────────────────────────────────────────────────────
 function showRound(idx) {
   curRound = idx;
   const total = cfg.numRounds;
   document.getElementById('tRound').textContent = `Round ${idx + 1} / ${total}`;
-  document.getElementById('gameContent').innerHTML = renderRound(idx);
-  updateShoeBar();
+  document.getElementById('tableArea').innerHTML = renderRound(idx);
+  updateShoe();
+  resetCountReveal();
 
   const isLast = idx === total - 1;
   document.getElementById('tNext').textContent = reviewing
@@ -765,28 +849,22 @@ function showRound(idx) {
     : (isLast ? 'Guess the Count →' : 'Next Round →');
 
   document.getElementById('tPrev').style.display = idx > 0 ? 'inline-block' : 'none';
-  document.getElementById('tFooterInfo').innerHTML =
-    `<strong>Round ${idx + 1}:</strong> ${rounds[idx].delta >= 0 ? '+' : ''}${rounds[idx].delta} running (cumulative so far: <strong>${rounds.slice(0, idx + 1).reduce((s, r) => s + r.delta, 0)}</strong>)`;
+
+  // Scroll to top of content on round change
+  document.getElementById('tableArea').scrollTop = 0;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 function nextAction() {
-  if (curRound < cfg.numRounds - 1) {
-    showRound(curRound + 1);
-  } else if (reviewing) {
-    goResult();
-  } else {
-    goResult();
-  }
+  curRound < cfg.numRounds - 1 ? showRound(curRound + 1) : goResult();
 }
-
 function prevRound() {
   if (curRound > 0) showRound(curRound - 1);
 }
-
 function toggleHV() {
   showHV = !showHV;
-  document.getElementById('tHvToggle').textContent = showHV ? 'Hide Hi-Lo Values' : 'Show Hi-Lo Values';
+  document.getElementById('tHvToggle').textContent = showHV ? 'Hide Hi-Lo' : 'Show Hi-Lo';
   showRound(curRound);
 }
 
@@ -802,29 +880,23 @@ function startTraining() {
     numPlayers: Math.max(1, Math.min(7,  parseInt(document.getElementById('iPlayers').value) || 5)),
     numRounds:  Math.max(1, Math.min(30, parseInt(document.getElementById('iRounds').value)  || 3)),
   };
-
-  shoe     = makeShoe(cfg.numDecks);
-  shoeIdx  = 0;
-  rounds   = [];
-  reviewing= false;
-  showHV   = false;
-  document.getElementById('tHvToggle').textContent = 'Show Hi-Lo Values';
-
-  for (let r = 0; r < cfg.numRounds; r++) {
-    rounds.push(simulateRound(cfg.numPlayers));
-  }
-
+  shoe      = makeShoe(cfg.numDecks);
+  si        = 0;
+  rounds    = [];
+  reviewing = false;
+  showHV    = false;
+  document.getElementById('tHvToggle').textContent = 'Show Hi-Lo';
+  for (let r = 0; r < cfg.numRounds; r++) rounds.push(simRound(cfg.numPlayers));
   setScreen('game');
   showRound(0);
 }
 
 function goResult() {
-  const rc = rounds.reduce((s, r) => s + r.delta, 0);
   document.getElementById('rSub').textContent =
-    `After ${cfg.numRounds} round${cfg.numRounds > 1 ? 's' : ''} — enter your Hi-Lo estimates below.`;
+    `After ${cfg.numRounds} round${cfg.numRounds !== 1 ? 's' : ''} — enter your Hi-Lo estimates.`;
   document.getElementById('iRC').value = '';
   document.getElementById('iTC').value = '';
-  document.getElementById('answerBox').style.display = 'none';
+  document.getElementById('answerCard').style.display = 'none';
   document.getElementById('rReview').style.display = 'none';
   setScreen('result');
 }
@@ -842,48 +914,43 @@ function goSetup() {
 
 // ─── Count check ──────────────────────────────────────────────────────────────
 function checkCount() {
-  const rcInput = document.getElementById('iRC').value;
-  const tcInput = document.getElementById('iTC').value;
-  if (rcInput === '' && tcInput === '') { alert('Enter at least one count.'); return; }
+  const rcRaw = document.getElementById('iRC').value;
+  const tcRaw = document.getElementById('iTC').value;
+  if (!rcRaw && !tcRaw) { alert('Enter at least one count value.'); return; }
 
-  const actualRC = rounds.reduce((s, r) => s + r.delta, 0);
-  const dealtCards = shoeIdx;
-  const decksDealt  = dealtCards / 52;
-  const decksLeft   = (shoe.length - shoeIdx) / 52;
-  const actualTC    = decksLeft > 0.5 ? actualRC / decksLeft : actualRC;
-
-  const userRC = rcInput !== '' ? parseInt(rcInput)   : null;
-  const userTC = tcInput !== '' ? parseFloat(tcInput) : null;
-
-  const rcOff = userRC !== null ? Math.abs(userRC - actualRC) : null;
+  const actualRC   = rounds.reduce((s, r) => s + r.delta, 0);
+  const decksLeft  = (shoe.length - si) / 52;
+  const actualTC   = decksLeft > 0.5 ? actualRC / decksLeft : actualRC;
+  const userRC     = rcRaw ? parseInt(rcRaw)     : null;
+  const userTC     = tcRaw ? parseFloat(tcRaw)   : null;
+  const rcOff      = userRC !== null ? Math.abs(userRC - actualRC) : null;
 
   let grade, cls;
-  if (rcOff === null)     { grade = 'Skipped RC'; cls = 'close'; }
-  else if (rcOff === 0)   { grade = 'Perfect Running Count!'; cls = 'correct'; }
-  else if (rcOff <= 2)    { grade = 'Close — within 2'; cls = 'close'; }
-  else if (rcOff <= 5)    { grade = `Off by ${rcOff}`; cls = 'close'; }
-  else                    { grade = `Off by ${rcOff}`; cls = 'wrong'; }
+  if (rcOff === null)   { grade = 'Skipped RC'; cls = 'near'; }
+  else if (rcOff === 0) { grade = 'Perfect — exact count!'; cls = 'ok'; }
+  else if (rcOff <= 2)  { grade = `Close — off by ${rcOff}`; cls = 'near'; }
+  else                  { grade = `Off by ${rcOff}`; cls = 'off'; }
 
-  const breakdown = rounds.map((r, i) => {
-    const cls2 = r.delta > 0 ? 'rc-pos' : r.delta < 0 ? 'rc-neg' : 'rc-neu';
-    return `<span class="${cls2}">R${i+1}: ${r.delta >= 0 ? '+' : ''}${r.delta}</span>`;
+  const fmtN = n => (n >= 0 ? `+${n}` : `${n}`);
+  const fmtF = n => (n >= 0 ? `+${n.toFixed(1)}` : n.toFixed(1));
+
+  const bkHtml = rounds.map((r, i) => {
+    const c = r.delta > 0 ? 'bk-pos' : r.delta < 0 ? 'bk-neg' : 'bk-neu';
+    return `<span class="bk-chip ${c}">R${i+1}: ${fmtN(r.delta)}</span>`;
   }).join('');
 
-  const fmtRC = n => n >= 0 ? `+${n}` : `${n}`;
-  const fmtTC = n => (n >= 0 ? `+${n.toFixed(1)}` : n.toFixed(1));
-
-  const el = document.getElementById('answerBox');
+  const el = document.getElementById('answerCard');
   el.style.display = 'block';
-  el.className = `answer-box ${cls}`;
+  el.className = `answer-card ${cls}`;
   el.innerHTML = `
     <div class="answer-grade">${grade}</div>
-    <div class="answer-stats">
+    <div class="answer-body">
       <strong>Running Count:</strong>
-      ${userRC !== null ? `Your guess: <strong>${fmtRC(userRC)}</strong>  ·  ` : ''}Actual: <strong>${fmtRC(actualRC)}</strong><br>
+      ${userRC !== null ? `Your guess: <strong>${fmtN(userRC)}</strong> · ` : ''}Actual: <strong>${fmtN(actualRC)}</strong><br>
       <strong>True Count:</strong>
-      ${userTC !== null ? `Your guess: <strong>${fmtTC(userTC)}</strong>  ·  ` : ''}Actual: <strong>${fmtTC(actualTC)}</strong><br>
-      <strong>Decks remaining:</strong> ~${decksLeft.toFixed(2)}
-      <div class="round-breakdown">${breakdown}</div>
+      ${userTC !== null ? `Your guess: <strong>${fmtF(userTC)}</strong> · ` : ''}Actual: <strong>${fmtF(actualTC)}</strong><br>
+      <strong>Decks left:</strong> ~${decksLeft.toFixed(2)}
+      <div class="breakdown">${bkHtml}</div>
     </div>`;
 
   document.getElementById('rReview').style.display = 'block';
